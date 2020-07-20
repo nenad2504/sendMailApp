@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $data = [
+        'title' => 'My first email',
+        'content' => 'You did it :)'
+    ];
+    
+    Mail::send('emails.test', $data, function($message){
+        $message->to("nenad.jovanovic2504@gmail.com", "Nenad Jovanovic")->subject("Heloo Nenad");
+    });
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
